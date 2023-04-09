@@ -51,4 +51,8 @@ class EditActivityActivity : AppCompatActivity() {
         myDbManager.closeDb()
     }
 
+    fun onClickCancel(view: View) {
+        finish()
+    }
+
 }

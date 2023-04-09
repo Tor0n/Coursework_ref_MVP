@@ -94,6 +94,20 @@
         app:layout_constraintEnd_toEndOf="@+id/editURL"
         app:layout_constraintHorizontal_bias="0.97"
         app:layout_constraintStart_toStartOf="@+id/editURL"
-        app:srcCompat="@drawable/ic_upload_image" />
+        app:srcCompat="@drawable/ic_upload_image"
+        tools:srcCompat="@drawable/ic_upload_image" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="29dp"
+        android:clickable="true"
+        android:onClick="onClickCancel"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_close" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

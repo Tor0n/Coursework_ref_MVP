@@ -19,19 +19,17 @@ class EditActivityActivity : AppCompatActivity() {
     fun onClickFinish(view: View) {
 
         val name = binding.editName.text.toString()
-        val url = binding.editURL.text.toString()
+        val uri = binding.editURL.text.toString()
         val salary = binding.editSalary.text.toString()
 
         if(name != "") {
-            if (url != "") {
+            if (uri != "") {
                 if (salary != "") {
-                    salary.toInt()
-
+                    myDbManager.insertInDb(name, uri, salary)
+                    finish()
                 } else binding.editName.error = "Введите зарплату сотрудника!"
             } else binding.editURL.error = "Вставьте ссылку!"
         } else binding.editName.error = "Введите имя и фамилию сотрудника!"
-
-        finish()
     }
 
     fun onClickUploadImage(view: View) {
@@ -42,4 +40,15 @@ class EditActivityActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        myDbManager.openDB()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myDbManager.closeDb()
+    }
+
 }

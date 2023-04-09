@@ -22,14 +22,14 @@ class MainActivity : AppCompatActivity() {
         myDbManager.openDB()
     }
 
-    fun onClickAdd(view: View) {
-        val i = Intent(this, EditActivityActivity::class.java)
-        startActivity(i)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         myDbManager.closeDb()
+    }
+
+    fun onClickAdd(view: View) {
+        val i = Intent(this, EditActivityActivity::class.java)
+        startActivity(i)
     }
 
 }

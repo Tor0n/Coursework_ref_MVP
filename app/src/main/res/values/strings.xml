@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="if_present">Добавьте сотрудников</string>
+    <string name="hint_for_url">Ссылка на фотографию сотрудника</string>
+    <string name="hint_for_name">Введите имя и фамилию сотрудника...</string>
+    <string name="hint_for_salary">Введите зарплату сотрудника...</string>
+</resources>

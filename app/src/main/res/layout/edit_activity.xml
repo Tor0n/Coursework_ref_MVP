@@ -7,6 +7,23 @@
     android:background="@color/light_blue"
     tools:context=".EditActivityActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bEnd2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="290dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="104dp"
+        android:clickable="true"
+        android:onClick="onClickFinishTypingUrl"
+        android:visibility="gone"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_check" />
+
     <EditText
         android:id="@+id/editName"
         android:layout_width="0dp"
@@ -23,27 +40,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editURL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="188dp"
-        android:background="@android:drawable/editbox_background"
-        android:ems="10"
-        android:hint="@string/hint_for_url"
-        android:inputType="textPersonName"
-        android:padding="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
         android:id="@+id/editSalary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="124dp"
+        android:layout_marginBottom="188dp"
         android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:hint="@string/hint_for_salary"
@@ -83,20 +84,6 @@
         app:srcCompat="@drawable/profile"
         tools:srcCompat="@drawable/profile" />
 
-    <ImageButton
-        android:id="@+id/bUploadImage"
-        android:layout_width="33dp"
-        android:layout_height="39dp"
-        android:layout_marginBottom="200dp"
-        android:background="#FFFFFF"
-        android:onClick="onClickUploadImage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editURL"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintStart_toStartOf="@+id/editURL"
-        app:srcCompat="@drawable/ic_upload_image"
-        tools:srcCompat="@drawable/ic_upload_image" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bCancel"
         android:layout_width="wrap_content"
@@ -105,9 +92,82 @@
         android:layout_marginBottom="29dp"
         android:clickable="true"
         android:onClick="onClickCancel"
+        android:visibility="visible"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_close" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/conChoose"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="98dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/editURL"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10"
+                android:hint="@string/hint_for_url"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/bUploadUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="onClickUploadUrl"
+                android:visibility="visible"
+                app:backgroundTint="@color/white"
+                app:srcCompat="@drawable/ic_upload_image" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/bGetImageFromGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="onClickOpenGallery"
+                android:visibility="visible"
+                app:backgroundTint="@color/white"
+                app:srcCompat="@drawable/ic_image" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bAddImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:clickable="true"
+        android:onClick="onClickAddImage"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,17 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.network.DataModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var  binding: ActivityMainBinding
     val dbManager = MyDbManager(this)
-    val adapter = RcAdapter(ArrayList())
+    val adapter = RcAdapter(ArrayList(), this)
+    private val dataModel: DataModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

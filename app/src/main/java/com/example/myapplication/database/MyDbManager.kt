@@ -1,8 +1,9 @@
-package com.example.myapplication
+package com.example.myapplication.database
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.example.myapplication.EmployeeList
 
 class MyDbManager(context: Context) {
     val myDbHelper = MyDBHelper(context)
@@ -21,13 +22,19 @@ class MyDbManager(context: Context) {
         db?.insert(MyDbNameClass.TABLE_NAME, null, values)
     }
 
-    fun readDbData(): ArrayList<String> {
-        val dataList = ArrayList<String>()
+    fun readDbData(): ArrayList<EmployeeList> {
+        val dataList = ArrayList<EmployeeList>()
         val cursor = db?.query(MyDbNameClass.TABLE_NAME, null, null, null, null, null, null)
 
             while (cursor?.moveToNext()!!) {
-                val dataText = cursor.getString(cursor.getColumnIndex(MyDbNameClass.COLUMN_NAME_NAME))
-                dataList.add(dataText.toString())
+                val dataName = cursor.getString(cursor.getColumnIndex(MyDbNameClass.COLUMN_NAME_NAME))
+                val dataUrl = cursor.getString(cursor.getColumnIndex(MyDbNameClass.COLUMN_NAME_URI))
+                val dataSalary = cursor.getString(cursor.getColumnIndex(MyDbNameClass.COLUMN_NAME_SALARY))
+                var item = EmployeeList()
+                item.name = dataName
+                item.url = dataUrl
+                item.salary = dataSalary
+                dataList.add(item)
             }
         cursor.close()
         return dataList

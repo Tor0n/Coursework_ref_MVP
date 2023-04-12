@@ -16,46 +16,17 @@ import com.example.myapplication.databinding.EditActivityBinding
 import com.example.myapplication.network.DataModel
 class EditActivityActivity : AppCompatActivity() {
     lateinit var binding: EditActivityBinding
-    val imageRequestCode = 10
+    private val imageRequestCode = 10
     var tempImageUri = "empty"
-    val myDbManager = MyDbManager(this)
+    lateinit var url: String
+    private val myDbManager = MyDbManager(this)
     private var timer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == RESULT_OK && requestCode == imageRequestCode) {
-            binding.empImage.setImageURI(data?.data)
-            tempImageUri = data?.data.toString()
-
-        }
         getIntents()
-    }
-
-    fun onClickFinish(view: View) {
-        val name = binding.editName.text.toString()
-        val uri = binding.editURL.text.toString()
-        val salary = binding.editSalary.text.toString()
-
-        if(name != "") {
-            if (uri != "") {
-                if (salary != "") {
-                    myDbManager.insertInDb(name, tempImageUri, salary)
-                    finish()
-                } else binding.editName.error = "Введите зарплату сотрудника!"
-            } else binding.editURL.error = "Вставьте ссылку!"
-        } else binding.editName.error = "Введите имя и фамилию сотрудника!"
-    }
-
-    fun onClickCancel(view: View) {
-        finish()
     }
 
     override fun onResume() {
@@ -68,18 +39,47 @@ class EditActivityActivity : AppCompatActivity() {
         myDbManager.closeDb()
     }
 
-    fun getIntents() {
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == RESULT_OK && requestCode == imageRequestCode) {
+            binding.empImage.setImageURI(data?.data)
+            tempImageUri = data?.data.toString()
+
+        }
+    }
+
+    fun onClickFinish(view: View)   {
+        val name = binding.editName.text.toString()
+        val salary = binding.editSalary.text.toString()
+
+        if(name != "") {
+                if (salary != "") {
+                    myDbManager.insertInDb(name, salary, tempImageUri)
+                    finish()
+                } else binding.editName.error = "Введите зарплату сотрудника!"
+        } else binding.editName.error = "Введите имя и фамилию сотрудника!"
+    }
+
+    fun onClickCancel(view: View) {
+        finish()
+    }
+
+    private fun getIntents() {
 
         val i = intent
 
-        if (i.getStringExtra(IntentConstants.I_NAME_KEY) != "null") {
+        if (i.getStringExtra(IntentConstants.I_NAME_KEY) != null) {
+
             binding.editName.setText(i.getStringExtra(IntentConstants.I_NAME_KEY))
             binding.editSalary.setText(i.getStringExtra(IntentConstants.I_SALARY_KEY))
 
-            if (i.getStringExtra(IntentConstants.I_URL_KEY) != "empty") {
+                /*if (i.getStringExtra(IntentConstants.I_URL_KEY) != "empty") {
+
                 binding.editURL.setText(i.getStringExtra(IntentConstants.I_URL_KEY))
                 binding.empImage.setImageURI(Uri.parse(i.getStringExtra(IntentConstants.I_URL_KEY)))
-            }
+
+            }*/
         }
     }
 
@@ -88,7 +88,12 @@ class EditActivityActivity : AppCompatActivity() {
         startCountDownTimer(5000)
     }
     fun onClickUploadUrl(view: View) {
-
+        binding.apply {
+            bGetImageFromGallery.visibility = View.GONE
+            bUploadUrl.visibility = View.GONE
+            editURL.visibility = View.VISIBLE
+            bEnd2.visibility = View.VISIBLE
+        }
     }
 
     fun onClickFinishTypingUrl(view: View) {
@@ -96,6 +101,15 @@ class EditActivityActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Upload wasn't successful", Toast.LENGTH_SHORT).show()
             binding.editURL.error = "Вставьте ссылку!"
         } else {
+            binding.apply {
+                url = editURL.text.toString()
+                conChoose.visibility = View.GONE
+                bEnd2.visibility = View.GONE
+                bGetImageFromGallery.visibility = View.VISIBLE
+                bUploadUrl.visibility = View.VISIBLE
+                editURL.visibility = View.GONE
+                editURL.setText("")
+            }
 
         }
     }
@@ -112,11 +126,9 @@ class EditActivityActivity : AppCompatActivity() {
             override fun onTick(timeMillis: Long) {
 
             }
-
             override fun onFinish() {
                 if (binding.bGetImageFromGallery.visibility == View.VISIBLE) {
                     binding.conChoose.visibility = View.GONE
-                    binding.bEnd2.visibility = View.GONE
                 }
             }
 

@@ -1,7 +1,7 @@
 package com.example.myapplication
 
 class EmployeeList {
-    lateinit var name: String
-    lateinit var url: String
-    lateinit var salary: String
+    var name: String = "empty"
+    var url: String = "empty"
+    var salary: String = "empty"
 }

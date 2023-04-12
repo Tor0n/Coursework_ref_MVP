@@ -6,4 +6,6 @@
     <string name="hint_for_salary">Введите зарплату сотрудника…</string>
     <string name="upload_from_gallery">Загрузить из галереи</string>
     <string name="upload_from_url">Загрузить ссылку</string>
+    <string name="all_salaries">Общая зарплата</string>
+    <string name="available_employees">Свободные кадры для найма</string>
 </resources>

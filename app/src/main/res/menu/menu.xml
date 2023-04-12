@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/available_employees"
+        android:id="@+id/available_employees"
+        />
+    <item
+        android:title="@string/all_salaries"
+        android:id="@+id/all_salaries"
+        android:icon="@drawable/ic_all_salaries"
+        app:showAsAction="always"
+        />
+</menu>

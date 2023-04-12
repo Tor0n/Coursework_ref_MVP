@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -13,15 +14,15 @@ class RcAdapter(arrayList1: ArrayList<EmployeeList>, contextM: Context): Recycle
 
     class ViewHolder(itemView: View, contextV: Context) : RecyclerView.ViewHolder(itemView) {
         private val binding = RcItemBinding.bind(itemView)
-        val context = contextV
+        private val context = contextV
 
-        fun setData(employee: EmployeeList) {
-            binding.empNameRc.text = employee.name
+        fun setData(item: EmployeeList) {
+            binding.empNameRc.text = item.name
             itemView.setOnClickListener {
                 val intent = Intent(context, EditActivityActivity:: class.java).apply {
-                    putExtra(IntentConstants.I_NAME_KEY, employee.name)
-                    putExtra(IntentConstants.I_URL_KEY, employee.url)
-                    putExtra(IntentConstants.I_SALARY_KEY, employee.salary)
+                    putExtra(IntentConstants.I_NAME_KEY, item.name)
+                    putExtra(IntentConstants.I_SALARY_KEY, item.salary)
+                    putExtra(IntentConstants.I_URL_KEY, item.url)
                 }
                 context.startActivity(intent)
             }
@@ -42,6 +43,7 @@ class RcAdapter(arrayList1: ArrayList<EmployeeList>, contextM: Context): Recycle
         holder.setData(nameList[position])
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateAdapter(itemList: ArrayList<EmployeeList>) {
         nameList.clear()
         nameList.addAll(itemList)

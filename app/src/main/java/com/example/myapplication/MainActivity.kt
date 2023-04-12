@@ -3,6 +3,8 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -47,8 +49,25 @@ class MainActivity : AppCompatActivity() {
         binding.rcView.adapter = adapter
     }
 
-    fun fillAdapter() {
+    private fun fillAdapter() {
         adapter.updateAdapter(dbManager.readDbData())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.all_salaries -> {
+
+            }
+            R.id.available_employees -> {
+
+            }
+        }
+        return true
     }
 
 }

@@ -10,7 +10,4 @@ open class DataModel: ViewModel() {
     }
 
 
-    init {
-
-    }
 }

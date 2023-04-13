@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Course work</string>
     <string name="if_present">Добавьте сотрудников</string>
-    <string name="hint_for_url">Введите ссылку…</string>
+    <string name="hint_for_url">Введите ссылку на фото…</string>
     <string name="hint_for_name">Введите имя и фамилию сотрудника…</string>
     <string name="hint_for_salary">Введите зарплату сотрудника…</string>
     <string name="upload_from_gallery">Загрузить из галереи</string>

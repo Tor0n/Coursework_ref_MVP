@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_blue"
-    tools:context=".MainActivity">
+    tools:context="com.example.mycoursework.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcView"
@@ -29,20 +29,20 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:onClick="onClickAdd"
-        app:backgroundTint="@color/blue"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="#ffffff"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@color/light_blue" />
 
     <TextView
         android:id="@+id/ifPresent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/if_present"
-        android:textColor="@color/blue"
+        android:textColor="@color/white"
         android:textSize="34sp"
         android:textStyle="bold"
         android:visibility="gone"

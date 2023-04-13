@@ -1,31 +1,29 @@
-package com.example.myapplication
+package com.example.mycoursework
 
-import android.content.Intent
-import android.graphics.ColorSpace.Model
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.example.myapplication.IntentConstants
+import com.example.myapplication.R
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.EditActivityBinding
 import com.example.myapplication.network.DataModel
+
 class EditActivityActivity : AppCompatActivity() {
     lateinit var binding: EditActivityBinding
-    private val imageRequestCode = 10
-    var tempImageUri = "empty"
-    lateinit var url: String
     private val myDbManager = MyDbManager(this)
-    private var timer: CountDownTimer? = null
+    private lateinit var url: String
+    //private var timer: CountDownTimer? = null
+    private val viewModel: DataModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         getIntents()
     }
 
@@ -39,100 +37,76 @@ class EditActivityActivity : AppCompatActivity() {
         myDbManager.closeDb()
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == RESULT_OK && requestCode == imageRequestCode) {
-            binding.empImage.setImageURI(data?.data)
-            tempImageUri = data?.data.toString()
+    private fun getIntents() {
 
+        val i = intent
+
+
+        binding.editName.setText(i.getStringExtra(IntentConstants.I_NAME_KEY))
+        binding.editSalary.setText(i.getStringExtra(IntentConstants.I_SALARY_KEY))
+
+        /*viewModel.changeOrNot.observe(this) {}
+    viewModel.changeOrNot.value = true */
+
+        if (i.getStringExtra(IntentConstants.I_URL_KEY) != null)
+            Glide.with(this@EditActivityActivity)
+                .load(i.getStringExtra(IntentConstants.I_URL_KEY))
+                .into(binding.empImage)
+        val log = i.getStringExtra(IntentConstants.I_URL_KEY).toString()
+        Log.d("MyLog", log)
+    }
+
+    fun onClickUploadUrl(view: View) {
+        binding.apply {
+            bAddImage.visibility = View.GONE
+            conChoose.visibility = View.VISIBLE
+            bUploadImage.visibility = View.VISIBLE
         }
     }
+
+    fun onClickFinishTypingUrl(view: View) {
+
+        binding.apply {
+            url = binding.editURL.text.toString()
+            Glide.with(this@EditActivityActivity).load(url).error(R.drawable.ic_error).into(empImage)
+            conChoose.visibility = View.GONE
+            bUploadImage.visibility = View.GONE
+            bAddImage.visibility = View.VISIBLE
+        }
+    } //В зависимости от значения параметра ViewModel назначить редактирование, ИЗМЕНЯЯ значение в базе данных.
 
     fun onClickFinish(view: View)   {
         val name = binding.editName.text.toString()
         val salary = binding.editSalary.text.toString()
+        url = binding.editURL.text.toString()
 
         if(name != "") {
-                if (salary != "") {
-                    myDbManager.insertInDb(name, salary, tempImageUri)
-                    finish()
-                } else binding.editName.error = "Введите зарплату сотрудника!"
+            if (salary != "") {
+                myDbManager.insertInDb(name, salary, url)
+                finish()
+            } else binding.editName.error = "Введите зарплату сотрудника!"
         } else binding.editName.error = "Введите имя и фамилию сотрудника!"
-    }
+    } //В зависимости от значения параметра ViewModel назначить редактирование, ИЗМЕНЯЯ значение в базе данных.
+
+    //Периферия
 
     fun onClickCancel(view: View) {
         finish()
     }
 
-    private fun getIntents() {
+    /* private fun startCountDownTimer(timeMillis : Long) {
+         timer?.cancel()
+         timer = object : CountDownTimer(timeMillis, 1000) {
+             override fun onTick(timeMillis: Long) {
 
-        val i = intent
+             }
+             override fun onFinish() {
+                 if (binding.bGetImageFromGallery.visibility == View.VISIBLE) {
+                     binding.conChoose.visibility = View.GONE
+                 }
+             }
 
-        if (i.getStringExtra(IntentConstants.I_NAME_KEY) != null) {
-
-            binding.editName.setText(i.getStringExtra(IntentConstants.I_NAME_KEY))
-            binding.editSalary.setText(i.getStringExtra(IntentConstants.I_SALARY_KEY))
-
-                /*if (i.getStringExtra(IntentConstants.I_URL_KEY) != "empty") {
-
-                binding.editURL.setText(i.getStringExtra(IntentConstants.I_URL_KEY))
-                binding.empImage.setImageURI(Uri.parse(i.getStringExtra(IntentConstants.I_URL_KEY)))
-
-            }*/
-        }
-    }
-
-    fun onClickAddImage(view: View) {
-        binding.conChoose.visibility = View.VISIBLE
-        startCountDownTimer(5000)
-    }
-    fun onClickUploadUrl(view: View) {
-        binding.apply {
-            bGetImageFromGallery.visibility = View.GONE
-            bUploadUrl.visibility = View.GONE
-            editURL.visibility = View.VISIBLE
-            bEnd2.visibility = View.VISIBLE
-        }
-    }
-
-    fun onClickFinishTypingUrl(view: View) {
-        if (binding.editURL.text.isNullOrEmpty()) {
-            Toast.makeText(applicationContext, "Upload wasn't successful", Toast.LENGTH_SHORT).show()
-            binding.editURL.error = "Вставьте ссылку!"
-        } else {
-            binding.apply {
-                url = editURL.text.toString()
-                conChoose.visibility = View.GONE
-                bEnd2.visibility = View.GONE
-                bGetImageFromGallery.visibility = View.VISIBLE
-                bUploadUrl.visibility = View.VISIBLE
-                editURL.visibility = View.GONE
-                editURL.setText("")
-            }
-
-        }
-    }
-    fun onClickOpenGallery(view: View) {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "image/*"
-        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        startActivityForResult(intent, imageRequestCode)
-    }
-
-    private fun startCountDownTimer(timeMillis : Long) {
-        timer?.cancel()
-        timer = object : CountDownTimer(timeMillis, 1000) {
-            override fun onTick(timeMillis: Long) {
-
-            }
-            override fun onFinish() {
-                if (binding.bGetImageFromGallery.visibility == View.VISIBLE) {
-                    binding.conChoose.visibility = View.GONE
-                }
-            }
-
-        }.start()
-    }
+         }.start()
+     } */
 
 }

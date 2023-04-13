@@ -14,13 +14,16 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".All_salaries"
+            android:exported="false" />
+        <activity
             android:name=".AvailableEmployess"
             android:exported="false" />
         <activity
-            android:name=".EditActivityActivity"
+            android:name="com.example.mycoursework.EditActivityActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.mycoursework.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

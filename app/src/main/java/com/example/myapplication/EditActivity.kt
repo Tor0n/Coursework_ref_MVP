@@ -12,12 +12,14 @@ import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.EditActivityBinding
 import com.example.myapplication.network.DataModel
 
-class EditActivityActivity : AppCompatActivity() {
+class EditActivity : AppCompatActivity() {
     lateinit var binding: EditActivityBinding
     private val myDbManager = MyDbManager(this)
     private lateinit var url: String
     //private var timer: CountDownTimer? = null
     private val viewModel: DataModel by viewModels()
+    private var employeeCreated = false
+    private var tempId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,20 +42,18 @@ class EditActivityActivity : AppCompatActivity() {
     private fun getIntents() {
 
         val i = intent
-
+        tempId = i.getIntExtra(IntentConstants.I_ID_KEY, 0)
+        Log.d("MyLog", tempId.toString())
+        employeeCreated = i.getBooleanExtra(IntentConstants.I_EMP_STATUS_KEY, false)
 
         binding.editName.setText(i.getStringExtra(IntentConstants.I_NAME_KEY))
         binding.editSalary.setText(i.getStringExtra(IntentConstants.I_SALARY_KEY))
 
-        /*viewModel.changeOrNot.observe(this) {}
-    viewModel.changeOrNot.value = true */
-
         if (i.getStringExtra(IntentConstants.I_URL_KEY) != null)
-            Glide.with(this@EditActivityActivity)
+            Glide.with(this@EditActivity)
                 .load(i.getStringExtra(IntentConstants.I_URL_KEY))
                 .into(binding.empImage)
-        val log = i.getStringExtra(IntentConstants.I_URL_KEY).toString()
-        Log.d("MyLog", log)
+        binding.editURL.setText(i.getStringExtra(IntentConstants.I_URL_KEY))
     }
 
     fun onClickUploadUrl(view: View) {
@@ -68,7 +68,7 @@ class EditActivityActivity : AppCompatActivity() {
 
         binding.apply {
             url = binding.editURL.text.toString()
-            Glide.with(this@EditActivityActivity).load(url).error(R.drawable.ic_error).into(empImage)
+            Glide.with(this@EditActivity).load(url).error(R.drawable.ic_error).into(empImage)
             conChoose.visibility = View.GONE
             bUploadImage.visibility = View.GONE
             bAddImage.visibility = View.VISIBLE
@@ -79,14 +79,21 @@ class EditActivityActivity : AppCompatActivity() {
         val name = binding.editName.text.toString()
         val salary = binding.editSalary.text.toString()
         url = binding.editURL.text.toString()
-
-        if(name != "") {
+        val id = tempId
+        if (name != "") {
             if (salary != "") {
-                myDbManager.insertInDb(name, salary, url)
-                finish()
+                if (!employeeCreated) {
+                    myDbManager.insertInDb(name, salary, url)
+                    finish()
+                } else {
+                    myDbManager.replaceInDb(name, salary, url, id)
+                    employeeCreated = false
+                    finish()
+                    Log.d("MyLog", id.toString())
+                }
             } else binding.editName.error = "Введите зарплату сотрудника!"
         } else binding.editName.error = "Введите имя и фамилию сотрудника!"
-    } //В зависимости от значения параметра ViewModel назначить редактирование, ИЗМЕНЯЯ значение в базе данных.
+    }
 
     //Периферия
 

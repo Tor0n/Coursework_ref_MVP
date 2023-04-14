@@ -11,7 +11,7 @@ import com.example.myapplication.EmployeeList
 import com.example.myapplication.IntentConstants
 import com.example.myapplication.R
 import com.example.myapplication.databinding.RcItemBinding
-import com.example.mycoursework.EditActivityActivity
+import com.example.mycoursework.EditActivity
 
 class RcAdapter(arrayList1: ArrayList<EmployeeList>, contextM: Context): RecyclerView.Adapter<RcAdapter.ViewHolder>() {
     private var nameList = arrayList1
@@ -22,18 +22,29 @@ class RcAdapter(arrayList1: ArrayList<EmployeeList>, contextM: Context): Recycle
         private val context = contextV
 
         fun setData(item: EmployeeList) {
+            var onLongClickListenerActive = false
             binding.empNameRc.text = item.name
             Glide.with(context).load(item.url).into(binding.empImageRc)
             //binding.empImageRc.setImageURI(Uri.parse(item.url))
             itemView.setOnClickListener {
-                val intent = Intent(context, EditActivityActivity:: class.java).apply {
-                    putExtra(IntentConstants.I_NAME_KEY, item.name)
-                    putExtra(IntentConstants.I_SALARY_KEY, item.salary)
-                    putExtra(IntentConstants.I_URL_KEY, item.url)
+                if (!onLongClickListenerActive) {
+                    val intent = Intent(context, EditActivity::class.java).apply {
+                        putExtra(IntentConstants.I_NAME_KEY, item.name)
+                        putExtra(IntentConstants.I_SALARY_KEY, item.salary)
+                        putExtra(IntentConstants.I_URL_KEY, item.url)
+                        putExtra(IntentConstants.I_ID_KEY, item.id)
+                        putExtra(IntentConstants.I_EMP_STATUS_KEY, true)
+                    }
+                    context.startActivity(intent)
+                } else {
+                    binding.itemChecked.visibility = View.VISIBLE
                 }
-                val log = intent.getStringExtra(IntentConstants.I_URL_KEY).toString()
-                Log.d("MyLog", log)
-                context.startActivity(intent)
+            }
+            itemView.setOnLongClickListener {
+                Log.d("MyLog", "Meow")
+                onLongClickListenerActive = true
+                binding.conCurtain.visibility = View.VISIBLE
+                return@setOnLongClickListener true
             }
         }
 

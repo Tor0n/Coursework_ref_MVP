@@ -29,6 +29,16 @@ class MyDbManager(context: Context) {
         db?.delete(MyDbNameClass.TABLE_NAME, selectedItemId, null)
     }
 
+    fun replaceInDb(name: String, salary: String, url: String, id: Int) {
+        val selectedItemId = BaseColumns._ID + "=$id"
+        val values = ContentValues().apply {
+            put(MyDbNameClass.COLUMN_NAME_NAME, name)
+            put(MyDbNameClass.COLUMN_NAME_SALARY, salary)
+            put(MyDbNameClass.COLUMN_NAME_URL, url)
+        }
+        db?.update(MyDbNameClass.TABLE_NAME, values, selectedItemId, null)
+    }
+
     @SuppressLint("Range")
     fun readDbData(): ArrayList<EmployeeList> {
         val dataList = ArrayList<EmployeeList>()
@@ -38,10 +48,12 @@ class MyDbManager(context: Context) {
                 val dataName = cursor.getString(cursor.getColumnIndex(MyDbNameClass.COLUMN_NAME_NAME))
                 val dataSalary = cursor.getString(cursor.getColumnIndex(MyDbNameClass.COLUMN_NAME_SALARY))
                 val dataUrl = cursor.getString(cursor.getColumnIndex(MyDbNameClass.COLUMN_NAME_URL))
+                val dataId = cursor.getInt(cursor.getColumnIndex(BaseColumns._ID))
                 val item = EmployeeList()
                 item.name = dataName
                 item.salary = dataSalary
                 item.url = dataUrl
+                item.id = dataId
                 dataList.add(item)
             }
         cursor.close()

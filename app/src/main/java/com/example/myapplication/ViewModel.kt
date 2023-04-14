@@ -8,6 +8,11 @@ open class DataModel: ViewModel() {
     val url: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
-
+    val mainActivityState: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+    val editActivityState: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
 }

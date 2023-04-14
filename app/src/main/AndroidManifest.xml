@@ -20,7 +20,7 @@
             android:name=".AvailableEmployess"
             android:exported="false" />
         <activity
-            android:name="com.example.mycoursework.EditActivityActivity"
+            android:name="com.example.mycoursework.EditActivity"
             android:exported="false" />
         <activity
             android:name="com.example.mycoursework.MainActivity"

@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickAdd(view: View) {
-        val i = Intent(this, EditActivityActivity::class.java)
+        val i = Intent(this, EditActivity::class.java)
         startActivity(i)
     }
 
@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
+
+
 
     //menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

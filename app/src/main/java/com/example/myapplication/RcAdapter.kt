@@ -12,6 +12,7 @@ import com.example.myapplication.IntentConstants
 import com.example.myapplication.R
 import com.example.myapplication.databinding.RcItemBinding
 import com.example.myapplication.EditActivity
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 class RcAdapter(arrayList1: ArrayList<EmployeeList>, contextM: Context): RecyclerView.Adapter<RcAdapter.ViewHolder>() {
     private var nameList = arrayList1

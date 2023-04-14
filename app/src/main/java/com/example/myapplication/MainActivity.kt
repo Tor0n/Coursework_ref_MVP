@@ -57,11 +57,9 @@ import com.example.myapplication.network.DataModel
         adapter.updateAdapter(dbManager.readDbData(""))
     }
 
-
-
     //menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
+        menuInflater.inflate(R.menu.menu_for_main_activity, menu)
 
         val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchItem = menu?.findItem(R.id.search)

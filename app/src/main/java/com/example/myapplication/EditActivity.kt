@@ -39,6 +39,7 @@ class EditActivity : AppCompatActivity() {
 
     private fun getIntents() {
 
+        viewModel.mainActivityState
         val i = intent
         tempId = i.getIntExtra(IntentConstants.I_ID_KEY, 0)
         Log.d("MyLog", tempId.toString())

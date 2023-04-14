@@ -1,4 +1,4 @@
-package com.example.mycoursework
+package com.example.myapplication
 
 import android.os.Bundle
 import android.util.Log
@@ -6,8 +6,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.myapplication.IntentConstants
-import com.example.myapplication.R
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.EditActivityBinding
 import com.example.myapplication.network.DataModel
@@ -73,7 +71,7 @@ class EditActivity : AppCompatActivity() {
             bUploadImage.visibility = View.GONE
             bAddImage.visibility = View.VISIBLE
         }
-    } //В зависимости от значения параметра ViewModel назначить редактирование, ИЗМЕНЯЯ значение в базе данных.
+    }
 
     fun onClickFinish(view: View)   {
         val name = binding.editName.text.toString()

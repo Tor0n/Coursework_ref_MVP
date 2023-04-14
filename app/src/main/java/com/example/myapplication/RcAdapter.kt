@@ -11,7 +11,7 @@ import com.example.myapplication.EmployeeList
 import com.example.myapplication.IntentConstants
 import com.example.myapplication.R
 import com.example.myapplication.databinding.RcItemBinding
-import com.example.mycoursework.EditActivity
+import com.example.myapplication.EditActivity
 
 class RcAdapter(arrayList1: ArrayList<EmployeeList>, contextM: Context): RecyclerView.Adapter<RcAdapter.ViewHolder>() {
     private var nameList = arrayList1

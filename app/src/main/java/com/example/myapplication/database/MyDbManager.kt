@@ -40,9 +40,12 @@ class MyDbManager(context: Context) {
     }
 
     @SuppressLint("Range")
-    fun readDbData(): ArrayList<EmployeeList> {
+    fun readDbData(searchText: String): ArrayList<EmployeeList> {
         val dataList = ArrayList<EmployeeList>()
-        val cursor = db?.query(MyDbNameClass.TABLE_NAME, null, null, null, null, null, null)
+        val selection = "${MyDbNameClass.COLUMN_NAME_NAME} like ?"
+        val cursor = db?.query(
+            MyDbNameClass.TABLE_NAME, null, selection, arrayOf("%$searchText%"), null, null, null
+        )
 
             while (cursor?.moveToNext()!!) {
                 val dataName = cursor.getString(cursor.getColumnIndex(MyDbNameClass.COLUMN_NAME_NAME))

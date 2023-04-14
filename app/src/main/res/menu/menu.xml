@@ -5,6 +5,15 @@
         android:title="@string/available_employees"
         android:id="@+id/available_employees"
         />
+
+    <item
+        android:title="@string/search"
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        />
+
     <item
         android:title="@string/all_salaries"
         android:id="@+id/all_salaries"

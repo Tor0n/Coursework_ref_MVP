@@ -41,7 +41,6 @@ class RcAdapter(arrayList1: ArrayList<EmployeeList>, contextM: Context): Recycle
                 }
             }
             itemView.setOnLongClickListener {
-                Log.d("MyLog", "Meow")
                 onLongClickListenerActive = true
                 binding.conCurtain.visibility = View.VISIBLE
                 return@setOnLongClickListener true

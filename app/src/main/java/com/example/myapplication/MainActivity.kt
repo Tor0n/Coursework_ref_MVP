@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.for_editing.EditActivity
-import com.example.myapplication.network.DataModel
 import com.example.myapplication.network.AvailableEmployees
 
  class MainActivity : AppCompatActivity() {
@@ -61,7 +60,7 @@ import com.example.myapplication.network.AvailableEmployees
 
     //menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_for_main_activity, menu)
+        menuInflater.inflate(R.menu.menu_for_main, menu)
 
         val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchItem = menu?.findItem(R.id.search)

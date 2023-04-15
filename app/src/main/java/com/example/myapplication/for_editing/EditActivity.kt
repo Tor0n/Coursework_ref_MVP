@@ -2,23 +2,23 @@ package com.example.myapplication.for_editing
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.example.myapplication.IntentConstants
 import com.example.myapplication.R
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.EditActivityBinding
-import com.example.myapplication.network.DataModel
+import com.example.myapplication.DataModel
 
 class EditActivity : AppCompatActivity() {
     lateinit var binding: EditActivityBinding
     private val myDbManager = MyDbManager(this)
     private lateinit var url: String
-    //private var timer: CountDownTimer? = null
     private val viewModel: DataModel by viewModels()
     private var employeeCreated = false
     private var tempId = 0
@@ -27,15 +27,32 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide()
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         getIntents()
+
+
+        viewModel.delete.observe(this@EditActivity) {
+            if (it) {
+                val id = tempId
+                myDbManager.removeFrDb(id)
+                finish()
+            }
+            binding.apply {
+                bAddImage.visibility = View.VISIBLE
+                bEnd.visibility = View.VISIBLE
+                bCancel.visibility = View.VISIBLE
+                curtain.visibility = View.GONE
+            }
+        }
+
+
         viewModel.ifFinished.observe(this@EditActivity) {
             if (it) {
                 binding.apply {
                     viewModel.url.observe(this@EditActivity) {
                         url = it
                     }
-
                     Glide.with(this@EditActivity).load(url).error(R.drawable.ic_error).into(empImage)
                     bAddImage.visibility = View.VISIBLE
                     bEnd.visibility = View.VISIBLE
@@ -44,6 +61,8 @@ class EditActivity : AppCompatActivity() {
                 }
             }
         }
+
+
     }
 
     override fun onResume() {
@@ -55,13 +74,36 @@ class EditActivity : AppCompatActivity() {
         super.onDestroy()
         myDbManager.closeDb()
     }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (employeeCreated) menuInflater.inflate(R.menu.menu_for_edit, menu)
+        return true
+        }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.delete -> {
+                viewModel.chooseHide.value = true
+                Log.d("MyLog", "Meow")
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragHolder, ConfirmationFragment.newInstance())
+                    .commit()
+                binding.apply {
+                    bAddImage.visibility = View.GONE
+                    bCancel.visibility = View.GONE
+                    bEnd.visibility = View.GONE
+                    curtain.visibility = View.VISIBLE
+                }
+            }
+        }
+        return true
+    }
 
     private fun getIntents() {
 
 
         val i = intent
         tempId = i.getIntExtra(IntentConstants.I_ID_KEY, 0)
-        Log.d("MyLog", tempId.toString())
         employeeCreated = i.getBooleanExtra(IntentConstants.I_EMP_STATUS_KEY, false)
 
         binding.editName.setText(i.getStringExtra(IntentConstants.I_NAME_KEY))
@@ -90,6 +132,8 @@ class EditActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(R.id.fragHolder, UrlChooseFragment.newInstance())
                 .commit()
+            viewModel.chooseHide.value = false
+
         }
     }
 
@@ -106,7 +150,6 @@ class EditActivity : AppCompatActivity() {
                     myDbManager.replaceInDb(name, salary, url, id)
                     employeeCreated = false
                     finish()
-                    Log.d("MyLog", id.toString())
                 }
             } else binding.editName.error = "Введите зарплату сотрудника!"
         } else binding.editName.error = "Введите имя и фамилию сотрудника!"
@@ -117,20 +160,4 @@ class EditActivity : AppCompatActivity() {
     fun onClickCancel(view: View) {
         finish()
     }
-
-    /* private fun startCountDownTimer(timeMillis : Long) {
-         timer?.cancel()
-         timer = object : CountDownTimer(timeMillis, 1000) {
-             override fun onTick(timeMillis: Long) {
-
-             }
-             override fun onFinish() {
-                 if (binding.bGetImageFromGallery.visibility == View.VISIBLE) {
-                     binding.conChoose.visibility = View.GONE
-                 }
-             }
-
-         }.start()
-     } */
-
 }

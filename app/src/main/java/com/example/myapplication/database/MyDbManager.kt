@@ -24,7 +24,7 @@ class MyDbManager(context: Context) {
         db?.insert(MyDbNameClass.TABLE_NAME, null, values)
     }
 
-    fun removeFrDb(id: String) {
+    fun removeFrDb(id: Int) {
         val selectedItemId = BaseColumns._ID + "=$id"
         db?.delete(MyDbNameClass.TABLE_NAME, selectedItemId, null)
     }

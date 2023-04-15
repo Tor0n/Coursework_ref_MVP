@@ -1,6 +1,5 @@
-package com.example.myapplication.network
+package com.example.myapplication
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -10,6 +9,15 @@ open class DataModel: ViewModel() {
         MutableLiveData<String>()
     }
     val ifFinished: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+    val confirmHide: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+    val chooseHide: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+    val delete: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
 

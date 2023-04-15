@@ -12,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="52dp"
         android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:hint="@string/hint_for_name"
@@ -24,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.175"
         app:layout_constraintStart_toEndOf="@+id/empImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/empImage" />
 
     <EditText
         android:id="@+id/editSalary"
@@ -129,7 +128,7 @@
         android:id="@+id/fragHolder"
         android:layout_width="300dp"
         android:layout_height="140dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/bCancel"
         app:layout_constraintEnd_toEndOf="parent"

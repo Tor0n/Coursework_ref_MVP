@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import com.example.myapplication.databinding.FragmentUrlChooseBinding
-import com.example.myapplication.network.DataModel
+import com.example.myapplication.DataModel
 
 
 class UrlChooseFragment : Fragment() {
@@ -26,6 +26,12 @@ class UrlChooseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.con.visibility = View.VISIBLE
+
+        dataModel.chooseHide.observe(activity as LifecycleOwner) {
+            if(it) binding.con.visibility = View.GONE
+            else binding.con.visibility = View.VISIBLE
+        }
+
 
         dataModel.url.observe(activity as LifecycleOwner) {
             binding.editURL.setText(it)

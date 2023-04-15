@@ -11,6 +11,8 @@
     <string name="search">Поиск работника</string>
     <string name="search_view_hint">Поиск…</string>
     <string name="title_for_available_employees">Доступные сотрудники</string>
+    <string name="delete">Удалить элемент</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="warning">Уверены, что хотите удалить карточку данного сотрудника?</string>
 </resources>

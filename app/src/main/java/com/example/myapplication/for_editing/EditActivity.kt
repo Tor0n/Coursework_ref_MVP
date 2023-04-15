@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -14,11 +13,14 @@ import com.example.myapplication.R
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.EditActivityBinding
 import com.example.myapplication.DataModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class EditActivity : AppCompatActivity() {
-    lateinit var binding: EditActivityBinding
+    private lateinit var binding: EditActivityBinding
     private val myDbManager = MyDbManager(this)
-    private lateinit var url: String
+    private var url: String = ""
     private val viewModel: DataModel by viewModels()
     private var employeeCreated = false
     private var tempId = 0
@@ -142,16 +144,18 @@ class EditActivity : AppCompatActivity() {
         val salary = binding.editSalary.text.toString()
         val id = tempId
         if (name != "") {
-            if (salary != "") {
-                if (!employeeCreated) {
-                    myDbManager.insertInDb(name, salary, url)
-                    finish()
-                } else {
-                    myDbManager.replaceInDb(name, salary, url, id)
-                    employeeCreated = false
-                    finish()
-                }
-            } else binding.editName.error = "Введите зарплату сотрудника!"
+            CoroutineScope(Dispatchers.Main).launch {
+                if (salary != "") {
+                    if (!employeeCreated) {
+                        myDbManager.insertInDb(name, salary, url)
+                        finish()
+                    } else {
+                        myDbManager.replaceInDb(name, salary, url, id)
+                        employeeCreated = false
+                        finish()
+                    }
+                } else binding.editName.error = "Введите зарплату сотрудника!"
+            }
         } else binding.editName.error = "Введите имя и фамилию сотрудника!"
     }
 

@@ -16,12 +16,13 @@ import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.for_editing.EditActivity
 import com.example.myapplication.network.AvailableEmployees
+import kotlinx.coroutines.*
 
  class MainActivity : AppCompatActivity() {
     lateinit var  binding: ActivityMainBinding
     private val dbManager = MyDbManager(this)
     private val adapter = RcAdapter(ArrayList(), this)
-    private val dataModel: DataModel by viewModels()
+    private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +35,7 @@ import com.example.myapplication.network.AvailableEmployees
     override fun onResume() {
         super.onResume()
         dbManager.openDB()
-        if (dbManager.readDbData("").isEmpty()) binding.ifPresent.visibility = View.VISIBLE
-        else binding.ifPresent.visibility = View.GONE
-        fillAdapter()
+        fillAdapter("")
     }
 
     override fun onDestroy() {
@@ -52,10 +51,6 @@ import com.example.myapplication.network.AvailableEmployees
     private fun init() {
         binding.rcView.layoutManager = GridLayoutManager(this@MainActivity, 3)
         binding.rcView.adapter = adapter
-    }
-
-    private fun fillAdapter() {
-        adapter.updateAdapter(dbManager.readDbData(""))
     }
 
     //menu
@@ -75,8 +70,7 @@ import com.example.myapplication.network.AvailableEmployees
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val list = dbManager.readDbData(newText!!)
-                adapter.updateAdapter(list)
+                fillAdapter(newText!!)
                 return true
             }
 
@@ -84,6 +78,16 @@ import com.example.myapplication.network.AvailableEmployees
 
         return true
     }
+
+     private fun fillAdapter(text: String) {
+         job?.cancel()
+         job = CoroutineScope(Dispatchers.Main).launch {
+             if (dbManager.readDbData("").isEmpty()) binding.ifPresent.visibility = View.VISIBLE
+             else binding.ifPresent.visibility = View.GONE
+             adapter.updateAdapter(dbManager.readDbData(text))
+         }
+     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.available_employees -> {

@@ -6,6 +6,9 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
 import com.example.myapplication.EmployeeList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 
 class MyDbManager(context: Context) {
     private val myDbHelper = MyDBHelper(context)
@@ -15,7 +18,7 @@ class MyDbManager(context: Context) {
         db = myDbHelper.writableDatabase
     }
 
-    fun insertInDb(name: String, salary: String, url: String) {
+    suspend fun insertInDb(name: String, salary: String, url: String) = withContext(Dispatchers.IO) {
         val values = ContentValues().apply {
             put(MyDbNameClass.COLUMN_NAME_NAME, name)
             put(MyDbNameClass.COLUMN_NAME_SALARY, salary)
@@ -29,7 +32,7 @@ class MyDbManager(context: Context) {
         db?.delete(MyDbNameClass.TABLE_NAME, selectedItemId, null)
     }
 
-    fun replaceInDb(name: String, salary: String, url: String, id: Int) {
+    suspend fun replaceInDb(name: String, salary: String, url: String, id: Int)  = withContext(Dispatchers.IO){
         val selectedItemId = BaseColumns._ID + "=$id"
         val values = ContentValues().apply {
             put(MyDbNameClass.COLUMN_NAME_NAME, name)
@@ -40,7 +43,7 @@ class MyDbManager(context: Context) {
     }
 
     @SuppressLint("Range")
-    fun readDbData(searchText: String): ArrayList<EmployeeList> {
+    suspend fun readDbData(searchText: String): ArrayList<EmployeeList> = withContext(Dispatchers.IO) {
         val dataList = ArrayList<EmployeeList>()
         val selection = "${MyDbNameClass.COLUMN_NAME_NAME} like ?"
         val cursor = db?.query(
@@ -60,7 +63,7 @@ class MyDbManager(context: Context) {
                 dataList.add(item)
             }
         cursor.close()
-        return dataList
+        return@withContext dataList
     }
 
     fun closeDb() {

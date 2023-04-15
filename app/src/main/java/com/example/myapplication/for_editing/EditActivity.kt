@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.example.myapplication.IntentConstants
 import com.example.myapplication.R
@@ -27,6 +29,21 @@ class EditActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         getIntents()
+        viewModel.ifFinished.observe(this@EditActivity) {
+            if (it) {
+                binding.apply {
+                    viewModel.url.observe(this@EditActivity) {
+                        url = it
+                    }
+
+                    Glide.with(this@EditActivity).load(url).error(R.drawable.ic_error).into(empImage)
+                    bAddImage.visibility = View.VISIBLE
+                    bEnd.visibility = View.VISIBLE
+                    bCancel.visibility = View.VISIBLE
+                    curtain.visibility = View.GONE
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -41,7 +58,7 @@ class EditActivity : AppCompatActivity() {
 
     private fun getIntents() {
 
-        viewModel.mainActivityState
+
         val i = intent
         tempId = i.getIntExtra(IntentConstants.I_ID_KEY, 0)
         Log.d("MyLog", tempId.toString())
@@ -50,36 +67,35 @@ class EditActivity : AppCompatActivity() {
         binding.editName.setText(i.getStringExtra(IntentConstants.I_NAME_KEY))
         binding.editSalary.setText(i.getStringExtra(IntentConstants.I_SALARY_KEY))
 
-        if (i.getStringExtra(IntentConstants.I_URL_KEY) != null)
+        if (i.getStringExtra(IntentConstants.I_URL_KEY) != null) {
             Glide.with(this@EditActivity)
                 .load(i.getStringExtra(IntentConstants.I_URL_KEY))
                 .into(binding.empImage)
-        binding.editURL.setText(i.getStringExtra(IntentConstants.I_URL_KEY))
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragHolder, UrlChooseFragment.newInstance())
+                .commit()
+            viewModel.url.value = i.getStringExtra(IntentConstants.I_URL_KEY)
+            binding.bAddImage.visibility = View.GONE
+        }
     }
 
     fun onClickUploadUrl(view: View) {
         binding.apply {
             bAddImage.visibility = View.GONE
-            conChoose.visibility = View.VISIBLE
-            bUploadImage.visibility = View.VISIBLE
-        }
-    }
-
-    fun onClickFinishTypingUrl(view: View) {
-
-        binding.apply {
-            url = binding.editURL.text.toString()
-            Glide.with(this@EditActivity).load(url).error(R.drawable.ic_error).into(empImage)
-            conChoose.visibility = View.GONE
-            bUploadImage.visibility = View.GONE
-            bAddImage.visibility = View.VISIBLE
+            bCancel.visibility = View.GONE
+            bEnd.visibility = View.GONE
+            curtain.visibility = View.VISIBLE
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragHolder, UrlChooseFragment.newInstance())
+                .commit()
         }
     }
 
     fun onClickFinish(view: View)   {
         val name = binding.editName.text.toString()
         val salary = binding.editSalary.text.toString()
-        url = binding.editURL.text.toString()
         val id = tempId
         if (name != "") {
             if (salary != "") {

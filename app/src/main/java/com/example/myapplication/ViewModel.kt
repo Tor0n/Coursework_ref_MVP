@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 
 open class DataModel: ViewModel() {
 
-    val mainActivityState: MutableLiveData<String> by lazy {
+    val url: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
-    val request: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    val ifFinished: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
     }
 
 }

@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="252dp"
+        android:layout_marginBottom="5dp"
         android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:hint="@string/hint_for_name"
@@ -20,7 +20,7 @@
         android:padding="20dp"
         android:textColor="@color/blue"
         android:textColorHint="@color/light_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/editSalary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="188dp"
+        android:layout_marginBottom="205dp"
         android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:hint="@string/hint_for_salary"
@@ -85,42 +85,6 @@
         app:srcCompat="@drawable/ic_profile"
         tools:srcCompat="@drawable/ic_profile" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/conChoose"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="98dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <EditText
-                android:id="@+id/editURL"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@android:drawable/editbox_background"
-                android:ems="10"
-                android:hint="@string/hint_for_url"
-                android:inputType="textPersonName"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bAddImage"
         android:layout_width="wrap_content"
@@ -139,17 +103,31 @@
         app:layout_constraintVertical_bias="0.465"
         app:srcCompat="@drawable/ic_change_image" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/bUploadImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="104dp"
-        android:clickable="true"
-        android:onClick="onClickFinishTypingUrl"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/curtain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/half_white_transparent"
         android:visibility="gone"
-        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/conChoose"
-        app:srcCompat="@drawable/ic_check" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/fragHolder"
+        android:layout_width="300dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/bCancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editSalary"
+        app:layout_constraintVertical_bias="0.09">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

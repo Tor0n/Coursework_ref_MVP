@@ -27,7 +27,7 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.hide()
         getIntents()
         viewModel.ifFinished.observe(this@EditActivity) {
             if (it) {

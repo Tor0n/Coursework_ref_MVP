@@ -10,4 +10,5 @@
     <string name="available_employees">Свободные кадры для найма</string>
     <string name="search">Поиск работника</string>
     <string name="search_view_hint">Поиск…</string>
+    <string name="title_for_available_employees">Доступные сотрудники</string>
 </resources>

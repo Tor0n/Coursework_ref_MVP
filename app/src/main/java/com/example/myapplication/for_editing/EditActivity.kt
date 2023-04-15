@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.for_editing
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,8 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.myapplication.IntentConstants
+import com.example.myapplication.R
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.EditActivityBinding
 import com.example.myapplication.network.DataModel

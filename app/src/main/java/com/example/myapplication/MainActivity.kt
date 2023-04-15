@@ -14,7 +14,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.ActivityMainBinding
+import com.example.myapplication.for_editing.EditActivity
 import com.example.myapplication.network.DataModel
+import com.example.myapplication.network.AvailableEmployees
 
  class MainActivity : AppCompatActivity() {
     lateinit var  binding: ActivityMainBinding
@@ -85,12 +87,9 @@ import com.example.myapplication.network.DataModel
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.all_salaries -> {
-                val i = Intent(this, All_salaries::class.java)
-                startActivity(i)
-            }
             R.id.available_employees -> {
-                val i = Intent(this, AvailableEmployess::class.java)
+
+                val i = Intent(this, AvailableEmployees::class.java)
                 startActivity(i)
             }
         }

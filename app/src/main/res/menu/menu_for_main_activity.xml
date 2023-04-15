@@ -14,10 +14,4 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         />
 
-    <item
-        android:title="@string/all_salaries"
-        android:id="@+id/all_salaries"
-        android:icon="@drawable/ic_all_salaries"
-        app:showAsAction="always"
-        />
 </menu>

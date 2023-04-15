@@ -37,35 +37,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:text="Name"
                 android:textColor="@color/blue"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/empEmailRc"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Email"
+                android:textColor="@color/blue"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/empPhoneNumberRc"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:text="Phone number"
+                android:textColor="@color/blue"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/conCurtain"
-            android:layout_width="400dp"
-            android:layout_height="225dp"
-            android:layout_gravity="center"
-            android:background="@color/half_white_transparent"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/itemChecked"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@color/light_blue"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.493"
-                app:srcCompat="@drawable/ic_square_check"
-                app:tint="@color/white" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

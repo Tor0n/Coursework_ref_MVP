@@ -24,7 +24,6 @@ class UrlChooseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         binding.con.visibility = View.VISIBLE
 
         dataModel.chooseHide.observe(activity as LifecycleOwner) {
@@ -44,9 +43,7 @@ class UrlChooseFragment : Fragment() {
         }
 
     }
-
     companion object {
         @JvmStatic
         fun newInstance() = UrlChooseFragment() }
-
 }

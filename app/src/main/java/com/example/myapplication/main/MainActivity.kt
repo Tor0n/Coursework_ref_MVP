@@ -17,7 +17,7 @@ import com.example.myapplication.for_editing.EditActivity
 import com.example.myapplication.network.AvailableEmployees
 import kotlinx.coroutines.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     lateinit var  binding: ActivityMainBinding
     private val dbManager = MyDbManager(this)
     private val adapter = RcAdapter(ArrayList(), this)

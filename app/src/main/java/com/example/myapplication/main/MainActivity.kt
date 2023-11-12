@@ -1,6 +1,5 @@
-package com.example.myapplication
+package com.example.myapplication.main
 
-import RcAdapter
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -8,10 +7,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.for_editing.EditActivity

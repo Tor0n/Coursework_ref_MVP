@@ -18,6 +18,7 @@ import com.example.myapplication.network.AvailableEmployees
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
+    private lateinit var mainPresenter: MainContract.PresentInterface
     lateinit var  binding: ActivityMainBinding
     private val dbManager = MyDbManager(this)
     private val adapter = RcAdapter(ArrayList(), this)
@@ -28,9 +29,15 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         setContentView(binding.root)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         init()
+        setupPresenter()
+    }
+    private fun setupPresenter() {
+        val dbManager = MyDbManager(application)
+        mainPresenter = MainPresenter(this, dbManager, adapter)
     }
     override fun onResume() {
         super.onResume()
+        mainPresenter.getEmployeeList()
         dbManager.openDB()
         fillAdapter("")
     }

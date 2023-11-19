@@ -15,9 +15,9 @@ class MainPresenter (
 
     lateinit var  binding: ActivityMainBinding
     private var job: Job? = null
-    override fun getEmployeeList() {
+    override fun getEmployeeList(text: String) {
         dbManager.openDB()
-        fillAdapter("")
+        fillAdapter(text)
     }
     private fun fillAdapter(text: String) {
         job?.cancel()

@@ -15,6 +15,10 @@ class MainPresenter (
 
     lateinit var  binding: ActivityMainBinding
     private var job: Job? = null
+
+    override fun stop() {
+        dbManager.closeDb()
+    }
     override fun getEmployeeList(text: String) {
         dbManager.openDB()
         fillAdapter(text)

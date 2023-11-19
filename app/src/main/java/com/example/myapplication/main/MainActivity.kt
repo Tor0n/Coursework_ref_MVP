@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     }
     override fun onDestroy() {
         super.onDestroy()
+        mainPresenter.stop()
         dbManager.closeDb()
     }
     fun onClickAdd(view: View) {

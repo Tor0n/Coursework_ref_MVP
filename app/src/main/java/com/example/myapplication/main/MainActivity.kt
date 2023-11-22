@@ -69,20 +69,14 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
-                fillAdapter(newText!!)
+                //fillAdapter(newText!!)
+                mainPresenter.getEmployeeList(newText!!)
                 return true
             }
         })
         return true
     }
-     private fun fillAdapter(text: String) {
-         job?.cancel()
-         job = CoroutineScope(Dispatchers.Main).launch {
-             if (dbManager.readDbData("").isEmpty()) binding.ifPresent.visibility = View.VISIBLE
-             else binding.ifPresent.visibility = View.GONE
-             adapter.updateAdapter(dbManager.readDbData(text))
-         }
-     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.available_employees -> {

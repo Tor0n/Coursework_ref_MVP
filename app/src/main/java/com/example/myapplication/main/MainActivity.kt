@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         super.onResume()
         dbManager.openDB()
         mainPresenter.getEmployeeList("")
-        //fillAdapter("")
     }
     override fun onDestroy() {
         super.onDestroy()

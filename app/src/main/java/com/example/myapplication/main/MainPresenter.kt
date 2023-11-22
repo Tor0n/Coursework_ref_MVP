@@ -9,13 +9,13 @@ import kotlinx.coroutines.*
 class MainPresenter (
     private var viewInterface: MainContract.ViewInterface,
     private var dbManager: MyDbManager,
-    private var adapter: RcAdapter
+    private var adapter: RcAdapter,
+    private var binding: ActivityMainBinding
 ) : MainContract.PresentInterface {
     private val TAG = "MainPresenter"
 
-    lateinit var  binding: ActivityMainBinding
+    //lateinit var  binding: ActivityMainBinding
     private var job: Job? = null
-
     override fun stop() {
         dbManager.closeDb()
     }

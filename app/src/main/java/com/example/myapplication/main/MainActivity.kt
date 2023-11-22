@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     }
     private fun setupPresenter() {
         val dbManager = MyDbManager(application)
-        mainPresenter = MainPresenter(this, dbManager, adapter)
+        mainPresenter = MainPresenter(this, dbManager, adapter, binding)
     }
     override fun onResume() {
         super.onResume()

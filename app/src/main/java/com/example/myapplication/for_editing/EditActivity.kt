@@ -33,8 +33,8 @@ class EditActivity : AppCompatActivity() {
 
         getIntents()
 
-
-        viewModel.delete.observe(this@EditActivity) {
+        viewModel.delete.observe(this@EditActivity
+        ) {
             if (it) {
                 val id = tempId
                 myDbManager.removeFrDb(id)

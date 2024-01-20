@@ -1,4 +1,4 @@
-package com.example.myapplication.network
+package com.example.myapplication.AvailableEmployees
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.RcAvEmployeeBinding
+import com.example.myapplication.network.EmployeeModel
 
 class AvailableEmployeeAdapter(private val employeeModel: MutableList<EmployeeModel>) : RecyclerView.Adapter<EmployeeViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {

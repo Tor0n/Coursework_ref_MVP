@@ -14,7 +14,6 @@ class MainPresenter (
 ) : MainContract.PresentInterface {
     private val TAG = "MainPresenter"
 
-    //lateinit var  binding: ActivityMainBinding
     private var job: Job? = null
     override fun stop() {
         dbManager.closeDb()
@@ -26,8 +25,9 @@ class MainPresenter (
     private fun fillAdapter(text: String) {
         job?.cancel()
         job = CoroutineScope(Dispatchers.Main).launch {
-            if (dbManager.readDbData("").isEmpty()) binding.ifPresent.visibility = View.VISIBLE
-            else binding.ifPresent.visibility = View.GONE
+            //if (dbManager.readDbData("").isEmpty()) binding.ifPresent.visibility = View.VISIBLE
+            //else binding.ifPresent.visibility = View.GONE
+            viewInterface.displayEmployees(dbManager.readDbData(text))
             adapter.updateAdapter(dbManager.readDbData(text))
         }
     }

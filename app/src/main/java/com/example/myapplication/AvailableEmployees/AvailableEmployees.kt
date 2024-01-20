@@ -1,4 +1,4 @@
-package com.example.myapplication.network
+package com.example.myapplication.AvailableEmployees
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityAvailableEmployeesBinding
+import com.example.myapplication.network.ApiService
+import com.example.myapplication.network.EmployeeModel
+import com.example.myapplication.network.ServiceGenerator
 import retrofit2.Call
 import retrofit2.Response
 
@@ -21,7 +24,7 @@ class AvailableEmployees : AppCompatActivity() {
 
         val serviceGenerator = ServiceGenerator.buildService(ApiService::class.java)
         val call = serviceGenerator.getEmployees()
-
+        //запрашивает список и выгружает
         call.enqueue(object: retrofit2.Callback<MutableList<EmployeeModel>> {
             override fun onResponse(call: Call<MutableList<EmployeeModel>>, response: Response<MutableList<EmployeeModel>>
             ) {

@@ -24,22 +24,21 @@ class UrlChooseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.con.visibility = View.VISIBLE
+        binding.con.visibility = View.VISIBLE //view
 
         dataModel.chooseHide.observe(activity as LifecycleOwner) {
-            if(it) binding.con.visibility = View.GONE
+            if(it) binding.con.visibility = View.GONE //view
             else binding.con.visibility = View.VISIBLE
         }
 
-
         dataModel.url.observe(activity as LifecycleOwner) {
-            binding.editURL.setText(it)
+            binding.editURL.setText(it) //view
         }
 
         binding.bUploadImage.setOnClickListener {
-            dataModel.url.value = binding.editURL.text.toString()
-            dataModel.ifFinished.value = true
-            binding.con.visibility = View.GONE
+            dataModel.url.value = binding.editURL.text.toString() //presenter
+            dataModel.ifFinished.value = true //presenter
+            binding.con.visibility = View.GONE //view
         }
 
     }

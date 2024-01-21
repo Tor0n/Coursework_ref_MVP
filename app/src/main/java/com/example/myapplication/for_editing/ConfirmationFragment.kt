@@ -23,12 +23,12 @@ class ConfirmationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.bCancelF.setOnClickListener {
-            binding.con.visibility = View.GONE
-            dataModel.delete.value = false
+            binding.con.visibility = View.GONE //view
+            dataModel.delete.value = false //presenter
         }
         binding.bDeleteF.setOnClickListener {
-            dataModel.delete.value = true
-            binding.con.visibility = View.GONE
+            dataModel.delete.value = true //presenter
+            binding.con.visibility = View.GONE //view
         }
     }
 

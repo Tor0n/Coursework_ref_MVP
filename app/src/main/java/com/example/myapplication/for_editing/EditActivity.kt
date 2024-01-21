@@ -13,13 +13,16 @@ import com.example.myapplication.R
 import com.example.myapplication.database.MyDbManager
 import com.example.myapplication.databinding.EditActivityBinding
 import com.example.myapplication.DataModel
+import com.example.myapplication.main.MainContract
+import com.example.myapplication.main.MainPresenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class EditActivity : AppCompatActivity() {
+class EditActivity : AppCompatActivity(), EditContract.ViewInterface {
+    private lateinit var editPresenter: EditContract.PresentInterface
     private lateinit var binding: EditActivityBinding
-    private val myDbManager = MyDbManager(this)
+    //private val myDbManager = MyDbManager(this)
     private var url: String = ""
     private val viewModel: DataModel by viewModels()
     private var employeeCreated = false
@@ -30,25 +33,25 @@ class EditActivity : AppCompatActivity() {
         binding = EditActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        setupPresenter()
 
         getIntents()
 
-        viewModel.delete.observe(this@EditActivity
-        ) {
+        viewModel.delete.observe(this@EditActivity) {
             if (it) {
                 val id = tempId
-                myDbManager.removeFrDb(id)
+                editPresenter.removeFrDb(id)
+                //myDbManager.removeFrDb(id)
                 finish()
             }
-            binding.apply {
-                bAddImage.visibility = View.VISIBLE
-                bEnd.visibility = View.VISIBLE
-                bCancel.visibility = View.VISIBLE
-                curtain.visibility = View.GONE
-            }
+            //binding.apply {
+                //bAddImage.visibility = View.VISIBLE
+                //bEnd.visibility = View.VISIBLE
+                //bCancel.visibility = View.VISIBLE
+                //curtain.visibility = View.GONE
+            //}
+            display()
         }
-
-
         viewModel.ifFinished.observe(this@EditActivity) {
             if (it) {
                 binding.apply {
@@ -56,25 +59,28 @@ class EditActivity : AppCompatActivity() {
                         url = it
                     }
                     Glide.with(this@EditActivity).load(url).error(R.drawable.ic_error).into(empImage)
-                    bAddImage.visibility = View.VISIBLE
-                    bEnd.visibility = View.VISIBLE
-                    bCancel.visibility = View.VISIBLE
-                    curtain.visibility = View.GONE
+                    //bAddImage.visibility = View.VISIBLE //view may be
+                    //bEnd.visibility = View.VISIBLE
+                    //bCancel.visibility = View.VISIBLE
+                    //curtain.visibility = View.GONE
+                    display()
                 }
             }
         }
-
-
     }
-
+    private fun setupPresenter() {
+        val dbManager = MyDbManager(this)
+        editPresenter = EditPresenter(this, dbManager)
+    }
     override fun onResume() {
         super.onResume()
-        myDbManager.openDB()
+        //myDbManager.openDB() //Presenter
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        myDbManager.closeDb()
+        editPresenter.stop()
+        //myDbManager.closeDb()
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (employeeCreated) menuInflater.inflate(R.menu.menu_for_edit, menu)
@@ -90,12 +96,13 @@ class EditActivity : AppCompatActivity() {
                     .beginTransaction()
                     .replace(R.id.fragHolder, ConfirmationFragment.newInstance())
                     .commit()
-                binding.apply {
-                    bAddImage.visibility = View.GONE
-                    bCancel.visibility = View.GONE
-                    bEnd.visibility = View.GONE
-                    curtain.visibility = View.VISIBLE
-                }
+                //binding.apply {
+                    //bAddImage.visibility = View.GONE
+                    //bCancel.visibility = View.GONE
+                    //bEnd.visibility = View.GONE
+                    //curtain.visibility = View.VISIBLE
+                //}
+                undisplay()
             }
         }
         return true
@@ -124,20 +131,20 @@ class EditActivity : AppCompatActivity() {
 
     fun onClickUploadUrl(view: View) {
         binding.apply {
-            bAddImage.visibility = View.GONE
-            bCancel.visibility = View.GONE
-            bEnd.visibility = View.GONE
-            curtain.visibility = View.VISIBLE
+            //bAddImage.visibility = View.GONE
+            //bCancel.visibility = View.GONE
+            //bEnd.visibility = View.GONE
+            //curtain.visibility = View.VISIBLE
+            undisplay()//view may be
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragHolder, UrlChooseFragment.newInstance())
                 .commit()
             viewModel.chooseHide.value = false
-
         }
     }
 
-    fun onClickFinish(view: View)   {
+    fun onClickFinish(view: View) {
         val name = binding.editName.text.toString()
         val salary = binding.editSalary.text.toString()
         val id = tempId
@@ -145,10 +152,12 @@ class EditActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 if (salary != "") {
                     if (!employeeCreated) {
-                        myDbManager.insertInDb(name, salary, url)
+                        //myDbManager.insertInDb(name, salary, url) //Presenter
+                        editPresenter.insertInDb(name, salary, url)
                         finish()
                     } else {
-                        myDbManager.replaceInDb(name, salary, url, id)
+                        //myDbManager.replaceInDb(name, salary, url, id) //Presenter
+                        editPresenter.replaceInDb(name, salary, url, id)
                         employeeCreated = false
                         finish()
                     }
@@ -156,6 +165,25 @@ class EditActivity : AppCompatActivity() {
             }
         } else binding.editName.error = "Введите имя и фамилию сотрудника!"
     }
+
+    //view interface fun
+    override fun display() {
+        binding.apply {
+            bAddImage.visibility = View.VISIBLE
+            bEnd.visibility = View.VISIBLE
+            bCancel.visibility = View.VISIBLE
+            curtain.visibility = View.GONE
+        }
+    }
+    override fun undisplay() {
+        binding.apply {
+            bAddImage.visibility = View.GONE
+            bCancel.visibility = View.GONE
+            bEnd.visibility = View.GONE
+            curtain.visibility = View.VISIBLE
+        }
+    }
+
 
     //Периферия
 

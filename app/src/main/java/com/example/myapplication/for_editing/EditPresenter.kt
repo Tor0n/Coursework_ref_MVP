@@ -1,7 +1,6 @@
 package com.example.myapplication.for_editing
 
 import com.example.myapplication.database.MyDbManager
-import com.example.myapplication.main.MainContract
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
